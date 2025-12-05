@@ -91,7 +91,10 @@ exports.loginUser = async (req, res) => {
       process.env.JWT_SECRET, // Menggunakan kunci rahasia dari .env
       { expiresIn: process.env.JWT_EXPIRES_IN },
       (err, token) => {
-        if (err) throw err;
+        if (err) {
+          console.error("JWT Sign Error:", err);
+          return res.status(500).send("Server Error");
+        }
         res.json({
           token,
           user: {
